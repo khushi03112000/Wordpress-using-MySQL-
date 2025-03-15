@@ -70,41 +70,40 @@ docker run -d \
   -p 3306:3306 \
   mysql:latest
 ```
-![image](https://github.com/user-attachments/assets/c348d364-e4aa-40a4-a72e-4133d6b6589b)
+![image](https://github.com/user-attachments/assets/0a8b2dea-81b5-4676-b44d-6a1d8bb2f213)
 
 
 #### Deploy WordPress Container (Public EC2)
 ```bash
 docker run -d \
   --name wordpress-container \
-  -e WORDPRESS_DB_HOST=10.0.2.100:3306 \
-  -e WORDPRESS_DB_USER=wordpress \
-  -e WORDPRESS_DB_PASSWORD=password \
-  -e WORDPRESS_DB_NAME=wordpress \
   -p 80:80 \
   wordpress:latest
 ```
-![image](https://github.com/user-attachments/assets/4fbecd9d-e1c1-4590-8143-aa353391904c)
+![image](https://github.com/user-attachments/assets/59996571-1f92-489f-bf56-97b3fb8c1c6c)
+
 
 ### Step 5: Verify Connection Between WordPress and MySQL
 From the WordPress EC2 instance, test the MySQL connection:
 ```bash
 mysql -u wordpress -p -h 10.0.136.111 -D wordpress
 ```
-![image](https://github.com/user-attachments/assets/c4c0b5d7-5ec0-46fa-8ff5-633313c5b693)
+![image](https://github.com/user-attachments/assets/4231c083-be42-4cf6-940c-335a1f06d4c6)
 
 
 ### Step 6: Access WordPress
 - Open the **IP** of the WordPress EC2 instance in a browser.
 - Complete the WordPress setup.
 
-📸 **Snapshot Required:** WordPress setup page in a browser.
+![image](https://github.com/user-attachments/assets/a6b738ea-4229-4c0b-b7a5-a3eed8deb1d6)
+
+![image](https://github.com/user-attachments/assets/22fe7b0f-476f-43f7-844b-37941d2293bc)
 
 ## Automating with Custom AMIs
 - Create an **AMI** from the configured EC2 instances.
 - Use the AMIs to launch pre-configured WordPress and MySQL instances in future deployments.
 
-📸 **Snapshot Required:** Screenshot of created AMIs in AWS.
+![image](https://github.com/user-attachments/assets/89b44e40-ef09-4ba8-ab3d-29435e576500)
 
 ## Automating with Startup Scripts
 Use the following **user data** scripts when launching EC2 instances:
@@ -118,10 +117,6 @@ systemctl start docker
 systemctl enable docker
 docker run -d \
   --name wordpress-container \
-  -e WORDPRESS_DB_HOST=10.0.2.100:3306 \
-  -e WORDPRESS_DB_USER=wordpress \
-  -e WORDPRESS_DB_PASSWORD=password \
-  -e WORDPRESS_DB_NAME=wordpress \
   -p 80:80 \
   wordpress:latest
 ```
@@ -142,8 +137,6 @@ docker run -d \
   -p 3306:3306 \
   mysql:latest
 ```
-📸 **Snapshot Required:** Console output when launching instances with user data.
-
 
 ## Conclusion
 This setup ensures a **secure**, **scalable**, and **repeatable** deployment of WordPress and MySQL using Docker on AWS. The architecture improves security by keeping the database private and enhances availability by using an Elastic IP.
