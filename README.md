@@ -33,25 +33,31 @@ This project demonstrates the deployment of a WordPress application and MySQL da
 - **MySQL EC2 Security Group**
   - Allow **MySQL (3306)** access only from the public subnet.
 
-📸 **Snapshot Required:** Security group rules for both instances.
+![image](https://github.com/user-attachments/assets/4e26ed2c-6b10-4270-80ad-f9903f0624ef)
+![image](https://github.com/user-attachments/assets/c60cd2d8-62ca-4c8d-8a50-f760858d7eeb)
+
 
 ### Step 3: Launch EC2 Instances
 - Launch two EC2 instances using **Ubuntu AMI**.
-- Assign **Elastic IP** to the WordPress instance.
+- Assign **Elastic IP** to the WordPress instance.(Elastic IP comes with a cost hence I have used normal IPs for demo purpose)
 - Place WordPress EC2 in the **public subnet** and MySQL EC2 in the **private subnet**.
 
-📸 **Snapshot Required:** Screenshot of both instances running in AWS.
+![image](https://github.com/user-attachments/assets/f3f1cedf-33af-4374-b4a0-3f180a0459d4)
+![image](https://github.com/user-attachments/assets/0feffb08-4088-4995-9ec0-01573f6c99be)
+
 
 ### Step 4: Install Docker and Deploy Containers
-#### Install Docker on Both EC2 Instances
-Run the following commands on both EC2 instances:
+#### Install Docker on Wordpress EC2 Instance. Learning : Since MySQL EC2 instance has been launched using AMI of Wordpress EC2 so it has docker and mysql docker image pre-installed.
+Run the following commands on Wordpress EC2 instances:
 ```bash
 sudo apt update -y
 sudo apt install docker.io -y
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
-📸 **Snapshot Required:** Output of `docker --version`.
+![image](https://github.com/user-attachments/assets/f21d8ca3-6388-40a8-bca8-cc5ad1057d2a)
+![image](https://github.com/user-attachments/assets/7cb782d8-8074-42bf-8a4b-7f06637dc467)
+
 
 #### Deploy MySQL Container (Private EC2)
 ```bash
@@ -64,7 +70,8 @@ docker run -d \
   -p 3306:3306 \
   mysql:latest
 ```
-📸 **Snapshot Required:** Output of `docker ps` showing MySQL container running.
+![image](https://github.com/user-attachments/assets/c348d364-e4aa-40a4-a72e-4133d6b6589b)
+
 
 #### Deploy WordPress Container (Public EC2)
 ```bash
@@ -77,17 +84,18 @@ docker run -d \
   -p 80:80 \
   wordpress:latest
 ```
-📸 **Snapshot Required:** Output of `docker ps` showing WordPress container running.
+![image](https://github.com/user-attachments/assets/4fbecd9d-e1c1-4590-8143-aa353391904c)
 
 ### Step 5: Verify Connection Between WordPress and MySQL
 From the WordPress EC2 instance, test the MySQL connection:
 ```bash
-mysql -u wordpress -p -h 10.0.2.100 -D wordpress
+mysql -u wordpress -p -h 10.0.136.111 -D wordpress
 ```
-📸 **Snapshot Required:** MySQL connection test result.
+![image](https://github.com/user-attachments/assets/c4c0b5d7-5ec0-46fa-8ff5-633313c5b693)
+
 
 ### Step 6: Access WordPress
-- Open the **Elastic IP** of the WordPress EC2 instance in a browser.
+- Open the **IP** of the WordPress EC2 instance in a browser.
 - Complete the WordPress setup.
 
 📸 **Snapshot Required:** WordPress setup page in a browser.
@@ -136,16 +144,6 @@ docker run -d \
 ```
 📸 **Snapshot Required:** Console output when launching instances with user data.
 
-## GitHub Repository Structure
-```
-/wordpress-mysql-docker
-│── README.md
-│── startup-scripts
-│   │── wordpress.sh
-│   │── mysql.sh
-│── terraform (if using Terraform for automation)
-│── snapshots (Add screenshots here)
-```
 
 ## Conclusion
 This setup ensures a **secure**, **scalable**, and **repeatable** deployment of WordPress and MySQL using Docker on AWS. The architecture improves security by keeping the database private and enhances availability by using an Elastic IP.
