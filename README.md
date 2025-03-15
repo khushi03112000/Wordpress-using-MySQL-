@@ -141,8 +141,6 @@ docker run -d \
 ## Conclusion
 This setup ensures a **secure**, **scalable**, and **repeatable** deployment of WordPress and MySQL using Docker on AWS. The architecture improves security by keeping the database private and enhances availability by using an Elastic IP.
 
-📸 **Final Snapshot Required:** Screenshot of the working WordPress homepage.
-
 ---
 
 ### 🚀 **Next Steps**
